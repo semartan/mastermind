@@ -58,27 +58,38 @@ public class GameController {
 
     private void play() {
         List<ISecretType> userInput = new ArrayList<>();
+        // finché i tentavi sono > 0 e utente non ha vinto continuo a far andare il gioco
         while (tentatives > 0 && !won) {
+            // visualizzo tentativi rimanenti
             showRemainingTentatives();
+            // decremento tentativi
             tentatives--;
 
+            // leggo input dell'utente uno alla volta cosi faccio anche la validazione
             for (int x = 1; x <= difficolta; x++) {
                 System.out.println("Inserisci " + x + "a " + tipologia.description() + " seguita da un invio");
+                // leggo input dell'utente dal console poi faccio validare al Controller e aggiungo alla lista degli elementi letti
                 userInput.add(controller.readValidInput(input));
             }
 
+            // confronto il segreto con input dell'utente tramite il Controller incaricato
             GameResult result = controller.compare(userInput, secret);
+            // scrivo sul termina il risultato, il metodo .toString() del GameResult torna la stringa formattata
             System.out.println(result);
+            // se correctPosition è uguale alla dimensione della lista dei segreti
             if (result.getCorrectPosition() == secret.size()) {
+                // allora utente ha vinto
                 won = true;
             }
+            // svuoto lista dell'utente per continuare a leggere a continuare del ciclo while
             userInput.clear();
         }
 
-        if (won) {
+        if (won) { // se ha vinto visualizzo il messaggi
             System.out.println("Bravo hai indovinato!");
-        } else {
+        } else { // se ha perso visualizzo cos'era il segreto
             System.out.println("Hai perso.");
+            System.out.printf("Il segreto era " + secret);
         }
     }
 
@@ -91,7 +102,9 @@ public class GameController {
                 // invoco Controller per tipologia numeri
                 return new NumberTypeController();
             case LETTERE:
+                // invoco Controller per tipologia lettere
                 return new LetterTypeController();
+            // invoco Controller per tipologia colori
             case COLORI:
             default:
                 return new ColorTypeController();
