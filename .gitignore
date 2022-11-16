@@ -1,0 +1,26 @@
+# Eclipse / STS
+.classpath
+.project
+.springBeans
+.settings/
+
+# IntelliJ
+.idea/
+*.iml
+
+# Annotation Processing
+.factorypath
+.apt_generated/
+.apt_generated_test/
+
+# Other
+target/
+logs/
+out/
+
+# Project Specific
+igd-board/target
+.env
+.DS_Store
+
+
